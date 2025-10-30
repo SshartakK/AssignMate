@@ -1,16 +1,18 @@
+
 from django.contrib import admin
+
 from .models import Homework, Comment, Enrollment
 from .models import HomeworkSolution, Course
 
 @admin.register(Homework)
 class HomeworkAdmin(admin.ModelAdmin):
     list_display = ['title', 'course', 'slug', 'author', 'publish', 'status']
-    list_filter = ['status', 'created', 'publish', 'author'] #фильтрация в боковой панели
-    search_fields = ['title', 'body'] #поля, по которым можно осуществить поиск
-    prepopulated_fields = {'slug': ('title',)} #slug = title
-    raw_id_fields = ['author'] #поле author отображается поисковым виджетом
-    autocomplete_fields = ['author'] #критерий сортировки по статусу
-    date_hierarchy = 'publish' #навигация по иерархии дат
+    list_filter = ['status', 'created', 'publish', 'author']
+    search_fields = ['title', 'body']
+    prepopulated_fields = {'slug': ('title',)}
+    raw_id_fields = ['author']
+    autocomplete_fields = ['author']
+    date_hierarchy = 'publish'
     ordering = ['status', 'publish']
 
 @admin.register(Comment)
@@ -27,7 +29,7 @@ class HomeworkSolutionAdmin(admin.ModelAdmin):
 
 class EnrollmentInline(admin.TabularInline):
     model = Enrollment
-    extra = 1  # Устанавливает количество форм для новых записей
+    extra = 1
     autocomplete_fields = ['student']
 
 @admin.register(Course)

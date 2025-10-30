@@ -1,12 +1,16 @@
+
 from django import forms
-from .models import Comment, Homework, Course, HomeworkSolution
 from taggit.forms import TagField
+
+from .models import Comment, Homework, Course, HomeworkSolution
 
 class EmailHomeworkForm(forms.Form):
     name = forms.CharField(max_length=25)
     to = forms.EmailField()
-    comments = forms.CharField(required=False,
-                               widget=forms.Textarea)
+    comments = forms.CharField(
+        required=False,
+        widget=forms.Textarea,
+    )
 
 class CommentForm(forms.ModelForm):
     class Meta:

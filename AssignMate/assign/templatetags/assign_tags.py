@@ -1,7 +1,10 @@
+
 from django import template
-from ..models import Homework, Course
 from django.utils.safestring import mark_safe
+
 import markdown
+
+from assign.models import Homework, Course
 
 
 register = template.Library()
@@ -18,7 +21,7 @@ def show_latest_homeworks(context, count=5):
         enrolled_courses = Course.objects.filter(enrollments__student=request.user)
         latest_homeworks = Homework.published.filter(course__in=enrolled_courses).order_by('-publish')[:count]
     else:
-        latest_homeworks = Homework.published.none()  # Не возвращает домашние задания для анонимных пользователей
+        latest_homeworks = Homework.published.none()
     return {'latest_homeworks': latest_homeworks}
 
 @register.filter(name='markdown')
