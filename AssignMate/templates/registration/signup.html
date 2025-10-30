@@ -1,0 +1,39 @@
+{% extends 'assign/base.html' %}
+{% block title %}
+  Регистрация
+{% endblock %}
+{% block content %}
+  <style>
+    #content {
+      width: 30%;
+    }
+  </style>
+  {% if form.errors %}
+    <div style="display: table; margin: 0 auto; text-align: left;">
+      {% for key, value in form.errors.items %}
+        <strong>{{ value }}</strong>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <form class="reg_form" method="post">
+    <h2>Регистрация</h2>
+    {% csrf_token %}
+    <p>Логин: {{ form.username }}</p>
+    <p>Email: {{ form.email }}</p>
+    <p>Имя: {{ form.first_name }}</p>
+    <p>Фамилия: {{ form.last_name }}</p>
+    <p>
+      Роль: <select name="role">
+        <option value="student">Ученик</option>
+        <option value="teacher">Преподаватель</option>
+      </select>
+    </p>
+    <p>Пароль: {{ form.password1 }}</p>
+    <p>Подтвердите пароль: {{ form.password2 }}</p>
+    <p>
+      <input type="submit" value="Создать аккаунт" />
+    </p>
+    <br />
+    <a gray href="{% url 'login' %}">Уже есть аккаунт? Войти</a>
+  </form>
+{% endblock %}

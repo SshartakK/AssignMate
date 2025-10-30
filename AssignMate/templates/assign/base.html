@@ -1,0 +1,42 @@
+{% load static %}
+{% load assign_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+    <link rel="icon" href="{% static 'images/AssignMate_icon.png' %}" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1 class="header_title">AssignMate</h1>
+        {% if 'signup' not in request.path and 'login' not in request.path %}
+          <span style="font-weight: 600"><a href="/">мои курсы</a></span>
+          <span style="font-weight: 100"><a href="{% url 'view-profile' %}">профиль</a></span>
+        {% endif %}
+      </nav>
+    </header>
+
+    <div id="content">
+      {% if messages %}
+        {% for message in messages %}
+          {{ message.tags }} {{ message }}
+        {% endfor %}
+      {% endif %}
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+    <footer>
+      <nav>
+        <span><a href="https://t.me/Kari_Abe">🌎 Связаться с разработчиками</a></span>
+      </nav>
+    </footer>
+  </body>
+</html>

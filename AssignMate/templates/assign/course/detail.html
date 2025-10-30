@@ -1,0 +1,26 @@
+{% extends "assign/base.html" %}
+{% load assign_tags %}
+
+{% block title %}{{ course.title }} - Детали курса{% endblock %}
+
+{% block content %}
+<h1>{{ course.title }}</h1>
+<p class="date">Создан {{ course.creator.username }}, дата создания: {{ course.publish.date }}</p>
+
+{% if request.user == course.creator %}
+    <a href="{% url 'assign:add_homework' %}?course_id={{ course.pk }}"><input type="submit" value="Добавить задание"/></a>
+{% endif %}
+
+{% if course.homeworks.exists %}
+    <h2>Задания</h2>
+    {% for homework in homeworks %}
+        <div>
+            <h3><a href="{{ homework.get_absolute_url }}">{{ homework.title }}</a></h3>
+            <p class="date">Опубликовано {{ homework.publish }}, автор: {{ homework.author }}</p>
+            {{ homework.body|markdown|truncatewords_html:30 }}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>В выбранном курсе пока нет заданий.</p>
+{% endif %}
+{% endblock %}

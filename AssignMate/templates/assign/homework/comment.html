@@ -1,0 +1,14 @@
+{% extends "assign/base.html" %}
+
+{% block title %}Добавить комментарий{% endblock %}
+<form method="post">
+    {% csrf_token %}
+{% block content %}
+    {% if comment %}
+        <h2>Комментарий был успешно добавлен.</h2>
+        <p><a href="{{ homework.get_absolute_url }}">Обратно к заданию</a></p>
+    {% else %}
+        {% include "assign/homework/includes/comment_form.html" %}
+    {% endif %}
+</form>    
+{% endblock %}

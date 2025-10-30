@@ -1,0 +1,9 @@
+{% extends "assign/base.html" %}
+{% block content %}
+    <h1>Вы уверены, что хотите удалить решение?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Да, удалить"/>
+        <a href="{% url 'assign:homework_detail' homework.publish.year homework.publish.month homework.publish.day homework.slug %}">Отменить</a>
+    </form>
+{% endblock %}

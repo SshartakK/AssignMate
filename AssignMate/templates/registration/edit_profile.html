@@ -1,0 +1,60 @@
+{% extends 'assign/base.html' %}
+{% block title %}
+  Редактировать профиль
+{% endblock %}
+{% block content %}
+  <style>
+    header nav span:nth-child(2) a {
+      font-weight: 100;
+    }
+    
+    header nav span:nth-child(3) a {
+      font-weight: 600;
+    }
+    
+    #content {
+      width: 50%;
+    }
+  </style>
+  <div class="profile_header">
+    <img type="pfp" src="{{ user.profile.avatar.url }}" />
+  </div>
+  {% if user_form.errors %}
+    <div role="alert">
+      <div>
+        {% for key, value in user_form.errors.items %}
+          <strong>{{ value }}</strong>
+        {% endfor %}
+      </div>
+      <button type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  {% endif %}
+  <div class="form-content">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <div>
+          <div>
+            <label>Логин:</label>
+            {{ user_form.username }}
+            <hr />
+            <label>Пароль:</label>
+            {{ user_form.email }}
+          </div>
+          <hr />
+          <div>
+            <a href="{% url 'password_change' %}">Изменить пароль</a>
+            <hr />
+            <label>Изменить фото профиля:</label>
+            {{ profile_form.avatar }}
+          </div>
+          <hr />
+          <label>Био:</label> {{ profile_form.bio }}
+        </div>
+      </div>
+      <br />
+      <input type="submit" value="Сохранить" />
+      <input type="submit" style="background-color: #8e8e8e;" value="Сброс" />
+    </form>
+  </div>
+{% endblock %}

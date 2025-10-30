@@ -1,0 +1,24 @@
+{% extends 'assign/base.html' %}
+{% block title %}
+  Вход
+{% endblock %}
+{% block content %}
+  <style>
+    #content {
+      width: 30%;
+    }
+  </style>
+  <form method="post">
+    <h2>Вход</h2>
+    <p>Логин: {{ form.username }}</p>
+    <p>Пароль: {{ form.password }}</p>
+    {% csrf_token %}
+    <p>
+      <input type="submit" value="Войти" />
+    </p>
+    <p>
+      <a gray href="{% url 'password_reset' %}">Забыли пароль?</a>
+    </p>
+    <a gray href="{% url 'signup' %}">Нет аккаунта? Зарегистрироваться</a>
+  </form>
+{% endblock %}

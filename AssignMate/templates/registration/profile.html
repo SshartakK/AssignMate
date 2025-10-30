@@ -1,0 +1,56 @@
+{% extends 'assign/base.html' %}
+{% block title %}
+  Профиль
+{% endblock %}
+{% block content %}
+  <style>
+    header nav span:nth-child(2) a {
+      font-weight: 100;
+    }
+    
+    header nav span:nth-child(3) a {
+      font-weight: 600;
+    }
+
+    #content {
+      width: 50%;
+    }
+  </style>
+
+  <div class="profile_header">
+    <img type="pfp" src="{{ user.profile.avatar.url }}"/>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <a href="#" onclick="parentNode.submit();">Выйти</a>
+    </form>
+  </div>
+
+  {% if user_form.errors %}
+    <div role="alert">
+      <div>
+        {% for key, value in user_form.errors.items %}
+          <strong>{{ value }}</strong>
+        {% endfor %}
+      </div>
+      <button type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  {% endif %}
+  <div class="form-content">
+    {% csrf_token %}
+    <div>
+      <div>
+        <div>
+          <label>Логин:</label>
+          {{ user.username }}
+          <hr />
+          <label>Email:</label>
+          {{ user.email }}
+        </div>
+        <hr />
+        <label>Био:</label> {{ user.profile.bio }}
+      </div>
+    </div>
+    <br />
+    <a href="{% url 'edit-profile' %}"><button type="submit">Изменить профиль</button></a>
+  </div>
+{% endblock %}

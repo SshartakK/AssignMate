@@ -1,0 +1,31 @@
+{% extends "assign/base.html" %}
+{% load assign_tags %}
+
+{% block title %}Список заданий{% endblock %}
+{% block content %}
+<h1>Задания</h1>
+{% if tag %}
+    <h2>Posts tagged with "{{ tag.name }}"</h2>
+{% endif %}
+{% for homework in homeworks %}
+    <h2>
+       <a href="{{ homework.get_absolute_url }}">
+           {{ homework.title }}</a>
+    </h2>
+    <p>Course: <a href="{% url 'assign:course_detail' pk=homework.course.id %}">{{ homework.course.title }}</a></p>
+    <p class="tags">
+        Tags:
+        {% for tag in homework.tags.all %}
+            <a href="{% url 'assign:homework_list_by_tag' tag.slug %}">
+                {{ tag.name }}
+            </a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p class="date">
+        Published {{ homework.publish }} by {{ homework.author }}
+    </p>
+    {{ homework.body|markdown|truncatewords_html:30 }}
+{% endfor %}
+{% include "pagination.html" with page=homeworks %}
+{% endblock %}

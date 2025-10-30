@@ -1,0 +1,26 @@
+{% extends "assign/base.html" %}
+
+{% block content %}
+<h2>Отправить решение "{{ homework.title }}"</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Text Area for Text Response -->
+    <div>
+        <label for="answer_text">Ваше решение:</label>
+        <textarea id="answer_text" name="answer_text" rows="10" cols="50" required></textarea>
+    </div>
+
+    <!-- File Input for PDF Upload -->
+    <div>
+        <label for="answer_pdf">Добавить PDF (необязательно):</label>
+        <input type="file" id="answer_pdf" name="answer_pdf" accept=".pdf">
+    </div>
+
+    <!-- Submission Button -->
+    <div>
+        <input type="submit" value="Отправить решение " />
+    </div>
+</form>
+
+{% endblock %}

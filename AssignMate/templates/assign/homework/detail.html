@@ -1,0 +1,84 @@
+{% extends "assign/base.html" %}
+{% load assign_tags %}
+
+{% block title %}{{ homework.title }}{% endblock %}
+
+{% block content %}
+<h1 type="homework_title">
+    {{ homework.title }} 
+
+    {% if request.user == homework.author or request.user.is_staff %}
+    <form method="post" action="{% url 'assign:delete_homework' homework.id %}">
+    {% csrf_token %}
+    <input style="background-color: #a02626;" type="submit" value="Удалить" />
+    </form>
+    {% endif %}
+</h1>
+
+<p class="date">
+    Опубликовано {{ homework.publish }}, автор: {{ homework.author }}
+</p>
+
+<p>
+    Курс: <a href="{% url 'assign:course_detail' pk=homework.course.id %}">{{ homework.course.title }}</a>
+</p>
+{{ homework.body|markdown }}
+
+{% if homework.pdf %}
+    <p><a href="{{ homework.pdf.url }}" target="_blank">Загрузить прикрепленный PDF</a></p>
+{% else %}
+    <p>No attached PDF.</p>
+{% endif %}
+
+<p><a href="{% url 'assign:homework_share' homework.id %}">Поделиться заданием...</a></p>
+
+{% if can_submit_solution and not is_teacher %}
+    <input type='submit' onclick="location.href='{% url 'assign:submit_solution' homework.id %}'" value="Отправить решение"/>
+{% endif %}
+
+{% if solutions %}
+    <h2>Отправленные решения</h2>
+    <ul>
+    {% for solution in solutions %}
+        <li>
+            Решение {{ solution.student.username }}:
+            <div>
+                <div class="preformatted-text">{{ solution.answer_text|markdown }}</div>
+                {% if solution.answer_pdf %}
+                    <a href="{{ solution.answer_pdf.url }}">Загрузить PDF</a>
+                {% endif %}
+                {% if solution.grade or solution.teacher_comment %}
+                    <p>Оценка: {{ solution.grade|default:"еще не оценено" }}</p>
+                    <p>Комментарий: {{ solution.teacher_comment|default:"нет коментария" }}</p>
+                {% endif %}
+                {% if is_teacher %}
+                    <a href="{% url 'assign:review_homework' solution.id %}">Оценить решение</a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Пока что нет отправленных решений.</p>
+{% endif %}
+
+{% with comments.count as total_comments %}
+    {% if total_comments|divisibleby:10 %}
+        <h2>{{ total_comments }} комментариев</h2>
+    {% elif total_comments|add:'0' == '1' %}
+        <h2>{{ total_comments }} комментарий</h2>
+    {% else %}
+        <h2>{{ total_comments }} комментария</h2>
+    {% endif %}
+{% endwith %}
+
+{% for comment in comments %}
+    <div class="comment">
+        <p class="info">Комментарий {{ forloop.counter }} от {{ comment.name }} в {{ comment.created }}</p>
+        {{ comment.body|linebreaks }}
+    </div>
+{% empty %}
+    <p>Пока нет комментариев.</p>
+{% endfor %}
+{% include "assign/homework/includes/comment_form.html" %}
+{% endblock %}

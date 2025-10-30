@@ -1,0 +1,6 @@
+<h2>Напишите комментарий</h2>
+<form action="{% url 'assign:homework_comment' homework.id %}" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Написать комментарий"></p>
+</form>

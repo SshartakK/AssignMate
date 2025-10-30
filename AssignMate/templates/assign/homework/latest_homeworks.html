@@ -1,0 +1,7 @@
+<ul>
+    {% for homework in latest_homeworks %}
+        <li>
+            <a href="{{ homework.get_absolute_url }}">{{ homework.title }}</a>
+        </li>
+    {% endfor %}
+</ul>

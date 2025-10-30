@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-family: "Raleway";
+    flex-direction: column;
+    min-height: 97vh;
+}
+
+a {
+    color: #5B48A9;
+    text-decoration: none;
+}
+
+h1 {
+    font-weight: bold;
+    border-bottom: 1px solid #bbb;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 7%;
+    background-color: #5B48A9;
+    box-shadow: 5px 5px 5px#82828286;
+    justify-content: center;
+    z-index: 1;
+}
+
+.header_title {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    font-family: "Baloo 2";
+    font-size: 1.75em;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: none;
+}
+
+nav {
+    padding-left: 20px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+}
+
+nav span {
+    padding-left: 10px;
+}
+
+nav span a {
+    color: #fff;
+}
+
+#content {
+    flex: 1;
+    padding: 2%;
+    width: 80%;
+    box-shadow: 3px 3px 3px 3px #8e8e8e8a;
+    border-radius: 15px;
+    margin: 5% auto;
+}
+
+#content>div:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+footer {
+    margin-top: auto;
+    display: flex;
+    position: absolute bottom;
+    bottom: 0;
+    width: 100%;
+    padding: 1%;
+    background-color: #5B48A9;
+    box-shadow: 5px -5px 5px#82828286;
+    justify-content: center;
+}
+
+.change_password_form {
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
+}
+
+input[type="password"] {
+    margin-top: 5px;
+}
+
+p.date {
+    color: #ccc;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* pagination */
+.pagination {
+    margin: 40px 0;
+    font-weight: bold;
+}
+
+/* forms */
+a button[type=submit], 
+input[type=submit] {
+    font-weight: bold;
+    background: #5B48A9;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 350px; /* Устанавливаем ширину полей ввода */
+    padding: 5px; /* Увеличиваем отступы вокруг полей */
+    font-size: 16px; /* Увеличиваем размер шрифта */
+}
+
+.errorlist {
+    color: #cc0033;
+    float: left;
+    clear: both;
+    padding-left: 10px;
+}
+
+/* comments */
+.comment {
+    padding: 10px;
+}
+
+.comment:nth-child(even) {
+    background: #efefef;
+}
+
+.comment .info {
+    font-weight: bold;
+    font-size: 12px;
+    color: #666;
+}
+
+.profile_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+[type="pfp"] {
+    padding-bottom: 10px;
+    border-radius: 50%;
+}
+
+[type="Homework_title"] {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+}
+
+[value="Удалить"] {
+    display: flex;
+    position: relative;
+}
+
+[gray] {
+    color: #8e8e8e;
+    text-decoration: underline;
+}
