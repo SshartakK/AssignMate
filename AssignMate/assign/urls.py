@@ -1,3 +1,4 @@
+"""Модуль URL-адресов приложения assign."""
 
 from django.urls import path
 from django.views.generic.base import RedirectView
@@ -5,6 +6,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 
 from . import views
 from .views import add_homework
+
 
 app_name = 'assign'
 
