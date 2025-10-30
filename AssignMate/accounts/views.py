@@ -1,13 +1,15 @@
+
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import SignUpForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
-from .forms import SignUpForm, LoginForm, UpdateUserForm, UpdateProfileForm
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+
+from .forms import SignUpForm, LoginForm, UpdateUserForm, UpdateProfileForm
 from .models import Profile
 
 
@@ -15,13 +17,10 @@ from .models import Profile
 class SignUpView(generic.CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy("login")
-    initial = None  # принимает {'key': 'value'}
+    initial = None
     template_name = 'registration/signup.html'
 
     def dispatch(self, request, *args, **kwargs):
-        # перенаправит на домашнюю страницу,
-        # если пользователь попытается получить
-        # доступ к странице регистрации после авторизации
         if request.user.is_authenticated:
             return redirect(to='/')
 
@@ -34,11 +33,11 @@ class SignUpView(generic.CreateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            user = form.save()  # Сохраняем пользователя
-            role = request.POST.get('role', 'student')  # Получаем роль из формы
-            Profile.objects.create(user=user, role=role)  # Создаем профиль с выбранной ролью
+            user = form.save()
+            role = request.POST.get('role', 'student')
+            Profile.objects.create(user=user, role=role)
             messages.success(request, f'Account created for {user.username}')
-            return redirect('login')  # редирект на страницу логина после регистрации
+            return redirect('login')
         return render(request, self.template_name, {'form': form})
 
 class CustomLoginView(LoginView):
@@ -48,16 +47,13 @@ class CustomLoginView(LoginView):
         remember_me = form.cleaned_data.get('remember_me')
 
         if not remember_me:
-            # Установим время истечения сеанса равным 0 секундам. Таким образом, он автоматически закроет сеанс после закрытия браузера. И обновим данные.
             self.request.session.set_expiry(0)
             self.request.session.modified = True
 
-        # В противном случае сеанс браузера будет таким же как время сеанса cookie "SESSION_COOKIE_AGE", определенное в settings.py
         return super(CustomLoginView, self).form_valid(form)
 
 @login_required
 def view_profile(request):
-    # This view only fetches and displays profile data
     return render(request, 'registration/profile.html', {'user': request.user})
 
 @login_required
