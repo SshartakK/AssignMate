@@ -41,7 +41,6 @@
 1. **Клонирование репозитория**
 ```bash
 git clone <url-репозитория>
-cd AssignMate
 ```
 
 2. **Установка зависимостей**
@@ -51,6 +50,7 @@ pip install -r requirements.txt
 
 3. **Применение миграций базы данных**
 ```bash
+cd AssignMate
 python manage.py migrate
 ```
 
