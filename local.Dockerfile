@@ -1,13 +1,10 @@
 # Используем официальный Python образ
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV ENVIRONMENT=production
-
-# Создаем не-root пользователя для безопасности
-RUN adduser --disabled-password --gecos '' myuser
+ENV ENVIRONMENT=development
 
 # Создаем и переходим в рабочую директорию
 WORKDIR /app
@@ -22,7 +19,6 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install gunicorn
 
 # Копируем весь проект
 COPY . .
@@ -30,15 +26,11 @@ COPY . .
 # Создаем директории для статики и медиа
 RUN mkdir -p /app/staticfiles /app/media
 
-# Меняем владельца директорий
-RUN chown -R myuser:myuser /app
-USER myuser
-
 # Собираем статику
 RUN python AssignMate/manage.py collectstatic --noinput
 
 # Открываем порт
 EXPOSE 8000
 
-# Запускаем приложение через gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "AssignMate.AssignMate.wsgi:application"]
+# Запускаем приложение
+CMD ["python", "AssignMate/manage.py", "runserver", "0.0.0.0:8000"]
