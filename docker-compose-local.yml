@@ -10,7 +10,7 @@ services:
     env_file:
       - local.env
     volumes:
-      - .:/app
-      - ./media:/app/media
-      - ./staticfiles:/app/staticfiles
+      - ./AssignMate:/app
+      - ./AssignMate/media:/app/media
+      - .AssignMate/staticfiles:/app/staticfiles
     restart: unless-stopped
