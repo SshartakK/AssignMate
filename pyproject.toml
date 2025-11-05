@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Assignmate"
+name = "assignmate"
 version = "0.1.0"
 description = "Django project for AssignMate"
 authors = ["Roman Lodigin"]
@@ -10,7 +10,6 @@ packages = [{include = "AssignMate"}]
 python = "3.12.6"
 Django = "5.2.7"
 gunicorn = "23.0.0"
-psycopg2 = "2.9.7"
 whitenoise = "6.6.0"
 Pillow = "12.0.0"
 python-decouple = "3.8"
