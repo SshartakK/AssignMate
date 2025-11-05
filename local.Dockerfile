@@ -1,36 +1,40 @@
-# Используем официальный Python образ
 FROM python:3.12-slim
 
-# Устанавливаем переменные окружения
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV ENVIRONMENT=development
 
-# Создаем и переходим в рабочую директорию
 WORKDIR /app
 
-# Устанавливаем системные зависимости
+# Install system dependencies + Poetry
 RUN apt-get update && apt-get install -y \
     gcc \
     python3-dev \
+    postgresql-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Копируем requirements.txt и устанавливаем зависимости Python
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install Poetry
+RUN pip install --upgrade pip  \
+    && pip install poetry
 
-# Копируем весь проект
+# Copy poetry files
+COPY pyproject.toml poetry.lock* ./
+
+# Install project dependencies
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
+
+# Copy project
 COPY . .
 
-# Создаем директории для статики и медиа
+# Create directories
 RUN mkdir -p /app/staticfiles /app/media
 
-# Собираем статику
+# Collect static files
 RUN python AssignMate/manage.py collectstatic --noinput
 
-# Открываем порт
 EXPOSE 8000
 
-# Запускаем приложение
 CMD ["python", "AssignMate/manage.py", "runserver", "0.0.0.0:8000"]
