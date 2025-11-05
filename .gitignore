@@ -10,7 +10,7 @@ db.sqlite3
 /staticfiles/
 
 # Environment
-local.env
+.env
 
 # Docker
 DockerVolumes/
