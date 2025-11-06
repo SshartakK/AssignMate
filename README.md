@@ -22,7 +22,7 @@
 ## 🛠 Технологический стек
 
 - **Backend**: Django 5.2.7
-- **Database**: SQLite
+- **Database**: PostgreSQL
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap
 - **File Storage**: Local file system / AWS S3
 - **Authentication**: Django Auth System
@@ -32,9 +32,8 @@
 
 ### Предварительные требования
 
-- Python 3.12.6
-- pip
 - Git
+- Docker
 
 ### Установка и запуск
 
@@ -43,29 +42,13 @@
 git clone <url-репозитория>
 ```
 
-2. **Установка зависимостей**
+2. **Запуск проекта**
 ```bash
-pip install -r requirements.txt
+make build up
 ```
 
-3. **Применение миграций базы данных**
-```bash
-cd AssignMate
-python manage.py migrate
-```
-
-4. **Создание суперпользователя**
-```bash
-python manage.py createsuperuser
-```
-
-5. **Запуск сервера разработки**
-```bash
-python manage.py runserver
-```
 
 ### Доступ к приложению
 
 - Основное приложение: http://localhost:8000
-
 - Админ-панель: http://localhost:8000/admin

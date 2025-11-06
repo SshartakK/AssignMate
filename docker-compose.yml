@@ -1,0 +1,44 @@
+services:
+
+  assign-db:
+    container_name: assign-db
+    image: postgres:15-alpine
+    ports:
+      - '${DB_EXTERNAL_PORT}:${DB_INTERNAL_PORT}'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./DockerVolumes/assign_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  assignmate:
+    container_name: assignmate
+    build:
+      context: ./AssignMate
+      dockerfile: Dockerfile
+    ports:
+      - '${ASSIGNMATE_EXTERNAL_PORT}:${ASSIGNMATE_INTERNAL_PORT}'
+    environment:
+      ASSIGNMATE_INTERNAL_PORT: ${ASSIGNMATE_INTERNAL_PORT}
+      ASSIGNMATE_EXTERNAL_PORT: ${ASSIGNMATE_EXTERNAL_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
+      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+      DB_INTERNAL_PORT: ${DB_EXTERNAL_PORT}
+      DB_EXTERNAL_PORT: ${DB_EXTERNAL_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+    depends_on:
+      assign-db:
+        condition: service_healthy
