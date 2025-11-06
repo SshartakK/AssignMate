@@ -22,7 +22,7 @@
 ## 🛠 Технологический стек
 
 - **Backend**: Django 5.2.7
-- **Database**: SQLite
+- **Database**: PostgreSQL
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap
 - **File Storage**: Local file system / AWS S3
 - **Authentication**: Django Auth System
@@ -35,6 +35,7 @@
 - Python 3.12.6
 - pip
 - Git
+- Docker
 
 ### Установка и запуск
 
@@ -45,11 +46,14 @@ git clone <url-репозитория>
 
 2. **Установка зависимостей**
 ```bash
-pip install -r requirements.txt
+pip install --upgrade pip 
+  && install poetry 
+poetry install
 ```
 
-3. **Применение миграций базы данных**
+3. **Запуск БД и применение миграций**
 ```bash
+make build up
 cd AssignMate
 python manage.py migrate
 ```

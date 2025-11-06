@@ -1,0 +1,20 @@
+services:
+
+  assign-db:
+    container_name: assign-db
+    image: postgres:15-alpine
+    env_file:
+      - local.env
+    ports:
+      - '${DB_EXTERNAL_PORT}:${DB_INTERNAL_PORT}'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./DockerVolumes/assign_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

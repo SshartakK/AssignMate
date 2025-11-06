@@ -5,12 +5,11 @@ __pycache__/
 *.pyd
 
 # Django
-db.sqlite3
 /media/
 /staticfiles/
 
 # Environment
-.env
+local.env
 
 # Docker
 DockerVolumes/
