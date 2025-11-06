@@ -32,8 +32,6 @@
 
 ### Предварительные требования
 
-- Python 3.12.6
-- pip
 - Git
 - Docker
 
@@ -44,34 +42,13 @@
 git clone <url-репозитория>
 ```
 
-2. **Установка зависимостей**
+2. **Запуск проекта**
 ```bash
-pip install --upgrade pip 
-  && pip install poetry
-cd AssignMate
-poetry install 
+make build up
 ```
 
-3. **Запуск БД и применение миграций**
-```bash
-cd .. 
-&& make build up
-cd AssignMate
-&& python manage.py migrate
-```
-
-4. **Создание суперпользователя**
-```bash
-python manage.py createsuperuser
-```
-
-5. **Запуск сервера разработки**
-```bash
-python manage.py runserver
-```
 
 ### Доступ к приложению
 
 - Основное приложение: http://localhost:8000
-
 - Админ-панель: http://localhost:8000/admin
