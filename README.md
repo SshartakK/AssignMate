@@ -47,15 +47,17 @@ git clone <url-репозитория>
 2. **Установка зависимостей**
 ```bash
 pip install --upgrade pip 
-  && install poetry 
-poetry install
+  && pip install poetry
+cd AssignMate
+poetry install 
 ```
 
 3. **Запуск БД и применение миграций**
 ```bash
-make build up
+cd .. 
+&& make build up
 cd AssignMate
-python manage.py migrate
+&& python manage.py migrate
 ```
 
 4. **Создание суперпользователя**
