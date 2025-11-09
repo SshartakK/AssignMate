@@ -14,7 +14,7 @@ from typing import Optional
 from .models import Homework, HomeworkSolution, Course, Enrollment
 from .forms import HomeworkForm
 from .forms import EmailHomeworkForm, CommentForm, HomeworkReviewForm
-from AssignMate import settings
+from config import settings
 
 __all__ = [
     'is_student',
